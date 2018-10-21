@@ -16,7 +16,7 @@ from pelican import signals
 
 
 def process_col(row):
-    return [col[1:-1].replace('\\n', '<br/>') for col in row]
+    return [col.replace('\\n', '<br/>') for col in row]
 
 def csv_loader(csv_elem, curpath,\
         linefeed='\n', delim=',', classes=['table'], limit=50):
@@ -38,7 +38,7 @@ def csv_loader(csv_elem, curpath,\
 
     #csv_string += '<tr><th>%s</th></tr>' % '</th><th>'.join(process_col(csv_list.pop(0).split(delim)))
     for row in csv_list:
-        csv_string += '<tr><td>%s</td></tr>' % '</td><td>'.join(process_col(row.split(delim)))
+        csv_string += '<tr><td>%s</td></tr>' % '</td><td>'.join(process_col(row))
 
     #if filename:
     #    csv_string += '<tr><td colspan="%s" class="data-link"><a href="%s">data link</a></td></tr>' % (len(csv_list[0].split(delim)), filename)
