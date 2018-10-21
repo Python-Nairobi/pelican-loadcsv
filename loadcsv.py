@@ -15,7 +15,7 @@ from pelican import signals
 
 def read_txt(filepath, encoding='utf-8'):
     with open(filepath, 'r') as f:
-        doc = f.read().decode(encoding)
+        doc = f.read()
     return doc
 
 def csv_loader(csv_elem, curpath,\
@@ -34,10 +34,7 @@ def csv_loader(csv_elem, curpath,\
     else:
         csv_string = '<table>'
 
-    if filename:
-        csv_list = filter(None, doc.split(linefeed))[:limit]
-    else:
-        csv_list = filter(None, doc.split(linefeed))
+    csv_list = doc.split(linefeed)[:limit]
 
     for i, row in enumerate(csv_list):
         if i==0:
