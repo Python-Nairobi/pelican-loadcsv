@@ -10,6 +10,7 @@ Released under the BSD 2-Clause License (http://opensource.org/licenses/BSD-2-Cl
 
 import os
 import re
+import csv
 
 from pelican import signals
 
@@ -27,17 +28,17 @@ def csv_loader(csv_elem, curpath,\
     if "'''" in csv_elem:
         filename = None
         doc = csv_elem.split("'''")[1]
+        csv_list = doc.split(linefeed)[:limit]
     else:
         filename = csv_elem.split("'")[1]
         filepath = os.path.join('content', curpath, filename)
-        doc = read_txt(filepath)
+        csv_list = csv.reader(open(filepath, newline=''), delimiter=',', quotechar='"')
 
     if classes:
         csv_string = '<table class="%s">' % ' '.join(classes)
     else:
         csv_string = '<table>'
 
-    csv_list = doc.split(linefeed)[:limit]
 
     #csv_string += '<tr><th>%s</th></tr>' % '</th><th>'.join(process_col(csv_list.pop(0).split(delim)))
     for row in csv_list:
