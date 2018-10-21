@@ -18,6 +18,9 @@ def read_txt(filepath, encoding='utf-8'):
         doc = f.read()
     return doc
 
+def process_col(row):
+    return [col[1:-1].replace('\\n', '<br/>') for col in row]
+
 def csv_loader(csv_elem, curpath,\
         linefeed='\n', delim=',', classes=['table'], limit=5):
 
@@ -36,11 +39,9 @@ def csv_loader(csv_elem, curpath,\
 
     csv_list = doc.split(linefeed)[:limit]
 
-    for i, row in enumerate(csv_list):
-        if i==0:
-            csv_string += '<tr><th>%s</th></tr>' % '</th><th>'.join(row.split(delim))
-        else:
-            csv_string += '<tr><td>%s</td></tr>' % '</td><td>'.join(row.split(delim))
+    #csv_string += '<tr><th>%s</th></tr>' % '</th><th>'.join(process_col(csv_list.pop(0).split(delim)))
+    for row in csv_list:
+        csv_string += '<tr><td>%s</td></tr>' % '</td><td>'.join(process_col(row.split(delim)))
 
     if filename:
         csv_string += '<tr><td colspan="%s" class="data-link"><a href="%s">data link</a></td></tr>' % (len(csv_list[0].split(delim)), filename)
