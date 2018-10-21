@@ -14,10 +14,6 @@ import csv
 
 from pelican import signals
 
-def read_txt(filepath, encoding='utf-8'):
-    with open(filepath, 'r') as f:
-        doc = f.read()
-    return doc
 
 def process_col(row):
     return [col[1:-1].replace('\\n', '<br/>') for col in row]
