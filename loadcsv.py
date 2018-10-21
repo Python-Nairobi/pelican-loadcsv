@@ -22,7 +22,7 @@ def process_col(row):
     return [col[1:-1].replace('\\n', '<br/>') for col in row]
 
 def csv_loader(csv_elem, curpath,\
-        linefeed='\n', delim=',', classes=['table'], limit=5):
+        linefeed='\n', delim=',', classes=['table'], limit=50):
 
     if "'''" in csv_elem:
         filename = None
@@ -43,8 +43,8 @@ def csv_loader(csv_elem, curpath,\
     for row in csv_list:
         csv_string += '<tr><td>%s</td></tr>' % '</td><td>'.join(process_col(row.split(delim)))
 
-    if filename:
-        csv_string += '<tr><td colspan="%s" class="data-link"><a href="%s">data link</a></td></tr>' % (len(csv_list[0].split(delim)), filename)
+    #if filename:
+    #    csv_string += '<tr><td colspan="%s" class="data-link"><a href="%s">data link</a></td></tr>' % (len(csv_list[0].split(delim)), filename)
     csv_string += '</table>'
 
     return csv_string
